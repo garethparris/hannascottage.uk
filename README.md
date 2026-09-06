@@ -10,15 +10,19 @@ Hannas Cottage self-catering accommodation site. Plain HTML/CSS/jQuery
 
 Copy `.dev.vars.example` to `.dev.vars` and fill in real values (or the
 Cloudflare Turnstile testing keys documented below) to exercise the contact
-form locally.
+form locally. For `TURNSTILE_SECRET_KEY`, use Cloudflare's testing secret key
+`1x0000000000000000000000000000000AA`, which pairs with the testing site key
+already in `public/index.html` and always passes verification.
 
 ## Testing
 
     npm run test
+    npm run check
 
-Unit tests cover the contact form's validation and Turnstile-verification
+`npm run test` covers the contact form's validation and Turnstile-verification
 logic (`src/lib/contact.ts`). There is no automated end-to-end test of a real
-Mailtrap send — that's verified manually against the deployed site.
+Mailtrap send — that's verified manually against the deployed site. `npm run
+check` type-checks the project.
 
 ## Deployment (manual, one-time setup)
 
@@ -34,7 +38,9 @@ declares `main = "src/worker.ts"` plus an `[assets]` block pointing at
 2. Under the Worker's **Settings > Variables and Secrets** (the runtime one,
    not the separate "Build variables and secrets" section under Settings >
    Build - that one only reaches the CI shell during `wrangler deploy`,
-   never the deployed Worker's `env`), set:
+   never the deployed Worker's `env`), set (plain Variables set here survive
+   every redeploy because `wrangler.toml` sets `keep_vars = true` - see the
+   comment there for why):
    - `MAILTRAP_API_TOKEN` - a Mailtrap API key for this site (Mailtrap's
      account here only has one verified sending domain, `parris.me.uk`, so
      this Worker sends `from: noreply@parris.me.uk` even though it's the
@@ -47,7 +53,10 @@ declares `main = "src/worker.ts"` plus an `[assets]` block pointing at
    `hannascottage.uk`), then replace the testing site key
    `1x00000000000000000000AA` in `public/index.html`'s `cf-turnstile` div
    with the real site key (safe to commit - it's public by design, unlike
-   the secret key).
+   the secret key). Until this swap is pushed, the deployed form will reject
+   every submission with "Verification failed, please try again" - the
+   testing site key's tokens don't validate against a real
+   `TURNSTILE_SECRET_KEY`, so this is expected, not a bug.
 4. Under the Worker's Settings > Domains & Routes, add `hannascottage.uk`
    (and `www.hannascottage.uk` if wanted); Cloudflare handles the DNS
    automatically since the domain's nameservers already point at Cloudflare.
