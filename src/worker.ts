@@ -25,10 +25,21 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
     console.error(
       `Contact form misconfigured: MAILTRAP_API_TOKEN present=${!!env.MAILTRAP_API_TOKEN}, CONTACT_TO_EMAIL present=${!!env.CONTACT_TO_EMAIL}, TURNSTILE_SECRET_KEY present=${!!env.TURNSTILE_SECRET_KEY}`
     );
-    return new Response(JSON.stringify({ error: 'Contact form is not configured' }), { status: 500 });
+    return new Response(JSON.stringify({ error: 'Contact form is not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
-  const formData = await request.formData();
+  let formData: FormData;
+  try {
+    formData = await request.formData();
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid request' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 
   const turnstileToken = formData.get('cf-turnstile-response');
   const turnstileValid =
@@ -37,13 +48,19 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
     (await verifyTurnstileToken(turnstileToken, env.TURNSTILE_SECRET_KEY, request.headers.get('CF-Connecting-IP') ?? undefined));
 
   if (!turnstileValid) {
-    return new Response(JSON.stringify({ error: 'Verification failed, please try again' }), { status: 400 });
+    return new Response(JSON.stringify({ error: 'Verification failed, please try again' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   const fields = await extractContactFields(formData);
 
   if (!fields.ok) {
-    return new Response(JSON.stringify({ error: fields.error }), { status: 400 });
+    return new Response(JSON.stringify({ error: fields.error }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   // Mailtrap's account behind MAILTRAP_API_TOKEN has only one verified
@@ -69,10 +86,16 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
   if (!mailtrapResponse.ok) {
     const body = await mailtrapResponse.text();
     console.error(`Mailtrap send failed: ${mailtrapResponse.status} ${body}`);
-    return new Response(JSON.stringify({ error: 'Failed to send' }), { status: 502 });
+    return new Response(JSON.stringify({ error: 'Failed to send' }), {
+      status: 502,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
-  return new Response(JSON.stringify({ ok: true }), { status: 200 });
+  return new Response(JSON.stringify({ ok: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
 
 export default {

@@ -4,6 +4,8 @@
 // tight enough to stop a bot pasting a spam payload into the email body.
 export const MAX_NAME_LENGTH = 200;
 export const MAX_MESSAGE_LENGTH = 5000;
+// RFC 5321 limit on the length of a full email address.
+export const MAX_EMAIL_LENGTH = 254;
 
 // Name of the hidden honeypot input rendered (off-screen) by the contact form.
 // A human never sees it, so a non-empty value means a bot filled the form in.
@@ -27,6 +29,7 @@ export async function extractContactFields(formData: FormData): Promise<
   if (typeof name !== 'string' || !name.trim()) return { ok: false, error: 'Missing name' };
   if (name.length > MAX_NAME_LENGTH) return { ok: false, error: 'Name too long' };
   if (typeof email !== 'string' || !email.includes('@')) return { ok: false, error: 'Invalid email' };
+  if (email.length > MAX_EMAIL_LENGTH) return { ok: false, error: 'Email too long' };
   if (typeof message !== 'string' || !message.trim()) return { ok: false, error: 'Missing message' };
   if (message.length > MAX_MESSAGE_LENGTH) return { ok: false, error: 'Message too long' };
 

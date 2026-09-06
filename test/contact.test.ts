@@ -5,6 +5,7 @@ import {
   HONEYPOT_FIELD,
   MAX_NAME_LENGTH,
   MAX_MESSAGE_LENGTH,
+  MAX_EMAIL_LENGTH,
 } from '../src/lib/contact';
 
 function formDataWith(fields: Record<string, string>): FormData {
@@ -104,6 +105,22 @@ describe('abuse protection', () => {
       })
     );
     expect(result).toEqual({ ok: false, error: 'Message too long' });
+  });
+
+  it('accepts an email exactly at the length limit', async () => {
+    const email = `${'a'.repeat(MAX_EMAIL_LENGTH - '@example.com'.length)}@example.com`;
+    const result = await extractContactFields(
+      formDataWith({ name: 'Jane Doe', email, message: 'Hello!' })
+    );
+    expect(result).toEqual({ ok: true, name: 'Jane Doe', email, message: 'Hello!' });
+  });
+
+  it('rejects an email over the length limit', async () => {
+    const email = `${'a'.repeat(MAX_EMAIL_LENGTH - '@example.com'.length + 1)}@example.com`;
+    const result = await extractContactFields(
+      formDataWith({ name: 'Jane Doe', email, message: 'Hello!' })
+    );
+    expect(result).toEqual({ ok: false, error: 'Email too long' });
   });
 });
 
