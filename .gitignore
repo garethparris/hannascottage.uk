@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# Cloudflare local dev state (Miniflare cache)
+.wrangler/
+
+# Cloudflare local dev secrets (wrangler dev)
+.dev.vars
+
+# environment variables
+.env
+.env.*
+
+# macOS-specific files
+.DS_Store
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# jetbrains setting folder
+.idea/
