@@ -34,11 +34,10 @@ strong {
 }
 
 .header {
-	height: 440px;
+	min-height: 440px;
 	width: 100%;
 	color: #fff;
 	clear: both;
-	overflow: hidden;
 	background: url(../img/bg-stripe.png) repeat-x top;
 	margin: 0 0 50px 0;
 }
@@ -131,10 +130,11 @@ strong {
 }
 .header .showcase {
 	color: #000;
-	height: 400px;
+	min-height: 400px;
 	font-family: 'OpenSansCondensedBold', Helvetica, Arial, sans-serif;
 	font-size: 18px;
 	background: url(../img/header-image.jpg) no-repeat center top;
+	background-size: cover;
 }
 
 .header .showcase .form {
@@ -503,7 +503,7 @@ input::-moz-focus-inner {
 handheld and (min-width: 220px) and (max-width: 300px) {
 	body { width: 238px;margin: 0 auto }
 	.content { width: 238px; }
-	.header { height: 540px; }
+	.header { min-height: 540px; }
 	.header .stripe { width: 238px; height: 130px; background: #000 }
 	.header .stripe .logo {padding: 0 0 0 20px;}
 	.header .stripe .social li.twitter,
@@ -544,7 +544,7 @@ handheld and (min-width: 220px) and (max-width: 300px) {
 handheld and (min-width: 300px) and (max-width: 440px) {
 	body { width: 318px; margin: 0 auto}
 	.content { width: 318px; }
-	.header { height: 540px; }
+	.header { min-height: 540px; }
 	.header .stripe { width: 318px; height: 130px; background: #000 }
 	.header .stripe .logo {padding: 0 0 0 20px;}
 	.header .stripe .social li.twitter,
@@ -581,7 +581,7 @@ handheld and (min-width: 440px) and (max-width: 720px) {
 	body { width: 480px; overflow-x: hidden; margin: 0 auto}
 	.content { width: 480px; overflow: hidden; }
 	.content h2 {width: 460px;}
-	.header { height: 540px; }
+	.header { min-height: 540px; }
 	.header .stripe { width: 480px; height: 120px; background: #000 }
 	.header .stripe .logo {padding: 0 0 0 20px;}
 	.header .stripe .social li.twitter,
@@ -618,7 +618,7 @@ handheld and (min-width: 720px) and (max-width: 980px) {
 	body { width: 766px; }
 	.content { width: 766px; }
 	.content h2 {width: 766px;}
-	.header { height: 520px; }
+	.header { min-height: 520px; }
 	.header .stripe { width: 766px; height: 120px; background: #000 }
 	.header .stripe .logo {padding: 0 0 0 20px;}
 	.header .stripe .social li.twitter,
