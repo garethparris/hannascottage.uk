@@ -208,12 +208,20 @@ strong {
 	width: 58px;
 }
 
-.header .showcase .form form .email.error {
+.header .showcase .form form .email.error,
+.header .showcase .form form .name.error,
+.header .showcase .form form .message.error {
     border: 1px solid #F00;
 }
 
+.header .showcase .form form .status {
+	clear: both;
+	color: #fff;
+	padding-top: 10px;
+}
+
 .header .showcase .form form .submit,
-.header .showcase .form form .submit[disabled=disabled]:hover {
+.header .showcase .form form .submit:disabled:hover {
 	width: 95px;
 	outline: none;
     -moz-border-bottom-colors: none;
@@ -509,6 +517,7 @@ handheld and (min-width: 220px) and (max-width: 300px) {
 	.header .showcase .form form div,
 	.header .showcase .form form input,
 	.header .showcase .form form textarea { width: 180px !important; clear: both; overflow: hidden; margin-left: 20px !important; display: block;}
+	.header .showcase .form form div.cf-turnstile { width: auto !important; overflow: visible; }
 	.header .showcase .form form label { width: 180px !important; clear: both; overflow: hidden;text-align: left; padding-left: 20px;}
 	.header .showcase .form form .submit { width: 192px !important; clear: both; overflow: hidden; margin: 20px 0 0 0;}
 
@@ -548,6 +557,7 @@ handheld and (min-width: 300px) and (max-width: 440px) {
 	.header .showcase .form form div,
 	.header .showcase .form form input,
 	.header .showcase .form form textarea { width: 245px !important; clear: both; overflow: hidden; margin-left: 20px !important; display: block;}
+	.header .showcase .form form div.cf-turnstile { width: auto !important; overflow: visible; }
 	.header .showcase .form form label { width: 245px !important; clear: both; overflow: hidden; text-align: left; padding-left: 20px;}
 	.header .showcase .form form .submit { width: 256px !important; clear: both; overflow: hidden; margin: 20px 0 0 0;}
 
@@ -584,6 +594,7 @@ handheld and (min-width: 440px) and (max-width: 720px) {
 	.header .showcase .form form div,
 	.header .showcase .form form input,
 	.header .showcase .form form textarea { width: 270px !important; clear: both; overflow: hidden; margin-left: 20px !important; display: block;}
+	.header .showcase .form form div.cf-turnstile { width: auto !important; overflow: visible; }
 	.header .showcase .form form label { width: 270px !important; clear: both; overflow: hidden; text-align: left; padding-left: 20px;}
 	.header .showcase .form form .submit { width: 282px !important; clear: both; overflow: hidden; margin: 20px 0 0 0;}
   

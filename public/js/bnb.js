@@ -84,7 +84,7 @@ function onTurnstileExpired() {
 
 				$.ajax({
 					url: "/api/contact",
-					method: "POST",
+					type: "POST",
 					data: new FormData(form),
 					processData: false,
 					contentType: false
@@ -95,6 +95,8 @@ function onTurnstileExpired() {
 					if (window.turnstile) { window.turnstile.reset(); }
 				}).fail(function() {
 					$status.text("Something went wrong, please try again or email us directly.");
+					$submit.prop("disabled", true);
+					if (window.turnstile) { window.turnstile.reset(); }
 				});
 
 				return false;

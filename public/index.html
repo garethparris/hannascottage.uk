@@ -79,18 +79,11 @@
             <span>To check availability or book online </span><a href="https://www.airbnb.co.uk/rooms/37902664">CLICK HERE.</a>
           </div>
           <div><span>Or send us a message:</span></div>
-          <!--
-            Honeypot: positioned off-screen rather than display:none, so naive
-            bots that skip hidden inputs still fill it in. Kept out of the tab
-            order and hidden from assistive tech so no real visitor ever
-            reaches it. Any non-empty value is rejected server-side (see
-            src/lib/contact.ts).
-          -->
           <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px;" />
           <label class="for-name">Name:</label>
           <input type="text" name="name" class="name required" required maxlength="200" />
           <label class="for-email">Email:</label>
-          <input type="text" name="email" class="email required" required />
+          <input type="text" name="email" class="email required" required maxlength="254" />
           <textarea name="message" class="message required" required maxlength="5000"></textarea>
           <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired"></div>
           <input type="submit" class="submit" value="Submit" disabled="disabled" />
