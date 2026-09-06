@@ -1,4 +1,15 @@
 
+// Called by the Cloudflare Turnstile widget (see public/index.html) once a
+// challenge completes or expires. Kept outside $(document).ready so these
+// are defined as soon as this script parses, regardless of load order
+// relative to Turnstile's own async script tag.
+function onTurnstileSuccess() {
+	document.querySelector(".booking .submit").disabled = false;
+}
+function onTurnstileExpired() {
+	document.querySelector(".booking .submit").disabled = true;
+}
+
 	$(document).ready(function(){
 
 // BACK TO TOP BUTTON
@@ -49,21 +60,46 @@
 				}
 			});
 
-// BOOKING FORM VALIDATION
+// BOOKING FORM VALIDATION AND SUBMISSION
 
 		$(".booking").validate({
 			rules: {
-				".email": {
+				name: {
+					required: true
+				},
+				email: {
 					required: true,
 					email: true
 				},
-				".message": {
+				message: {
 					required: true
 				}
 			},
 			errorPlacement: function(error, element){
-				}
-			});
+				},
+			submitHandler: function(form) {
+				var $form = $(form);
+				var $submit = $form.find(".submit");
+				var $status = $form.find(".status");
+
+				$.ajax({
+					url: "/api/contact",
+					method: "POST",
+					data: new FormData(form),
+					processData: false,
+					contentType: false
+				}).done(function() {
+					$status.text("Thanks, your message has been sent.");
+					form.reset();
+					$submit.prop("disabled", true);
+					if (window.turnstile) { window.turnstile.reset(); }
+				}).fail(function() {
+					$status.text("Something went wrong, please try again or email us directly.");
+				});
+
+				return false;
+			}
+		});
 
 	// END DOCUMENT READY MAIN WRAPPER
 	});

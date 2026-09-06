@@ -165,6 +165,12 @@ strong {
 	padding: 0 0 0 10px;
 }
 
+.header .showcase .form form input.name {
+	width: 250px;
+	margin: 0 5px 0 0;
+	padding: 0 0 0 10px;
+}
+
 .header .showcase .form form textarea {
     width: 410px;
     height: 80px;
@@ -195,6 +201,10 @@ strong {
 }
 
 .header .showcase .form form label.for-email {
+	width: 58px;
+}
+
+.header .showcase .form form label.for-name {
 	width: 58px;
 }
 

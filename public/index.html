@@ -54,6 +54,7 @@
   <script src="js/bnb.js" type="text/javascript"></script>
   <script src="js/modernizr.js" type="text/javascript"></script>
   <script src="js/testimonial.js" type="text/javascript"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -73,20 +74,27 @@
     </div><!-- end .stripe -->
     <div class="showcase">
       <div class="form">
-        <form class="booking" method="POST" action="https://www.enformed.io/oi0bqdgg" accept-charset="UTF-8">
+        <form class="booking">
 		  <div>
             <span>To check availability or book online </span><a href="https://www.airbnb.co.uk/rooms/37902664">CLICK HERE.</a>
           </div>
           <div><span>Or send us a message:</span></div>
-          <textarea name="message" class="message required"></textarea>
+          <!--
+            Honeypot: positioned off-screen rather than display:none, so naive
+            bots that skip hidden inputs still fill it in. Kept out of the tab
+            order and hidden from assistive tech so no real visitor ever
+            reaches it. Any non-empty value is rejected server-side (see
+            src/lib/contact.ts).
+          -->
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px;" />
+          <label class="for-name">Name:</label>
+          <input type="text" name="name" class="name required" required maxlength="200" />
           <label class="for-email">Email:</label>
-          <input type="text" name="email" class="email required" />    
-          <input type="submit" class="submit" value="Submit" />
-		  <input type="hidden" name="*redirect" value="http://www.hannascottage.uk/sent.html" />
-		  <input type="hidden" name="*subject" value="Hannas Cottage Website Contact Request" />
-          <input type="hidden" name="*default_email" value="hannascottage@prime23.co.uk" />
-		  <input type="hidden" name="*formname" value="hannascottage" />
-		  <input type="hidden" name="*honeypot" />
+          <input type="text" name="email" class="email required" required />
+          <textarea name="message" class="message required" required maxlength="5000"></textarea>
+          <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-callback="onTurnstileSuccess" data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileExpired"></div>
+          <input type="submit" class="submit" value="Submit" disabled="disabled" />
+          <p class="status" role="status"></p>
         </form>
       </div><!-- end .form -->
     </div><!-- end .showcase -->
