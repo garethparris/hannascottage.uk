@@ -61,7 +61,12 @@ declares `main = "src/worker.ts"` plus an `[assets]` block pointing at
    (and `www.hannascottage.uk` if wanted); Cloudflare handles the DNS
    automatically since the domain's nameservers already point at Cloudflare.
 5. Every push to `main` redeploys automatically; every PR gets its own
-   preview URL.
+   preview URL. If pushes stop triggering builds, check that the Cloudflare
+   Workers Builds GitHub App still has access to this specific repo (GitHub
+   → Settings → Applications → Installed GitHub Apps → Cloudflare Workers
+   and Pages → Configure) - a repo added after the app was first authorized,
+   or removed from its access list, silently stops triggering builds with no
+   error shown on either side.
 
 ## Contact form abuse protection
 
